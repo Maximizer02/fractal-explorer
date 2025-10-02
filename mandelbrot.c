@@ -1,12 +1,6 @@
-#include <stdio.h>
 #include <math.h>
-
-const int width =  120;
-const int height = 30;
-const int prescision = 32;
-const double xStep = 3.0 / width;
-const double yStep = 2.0 / height;
-const char color[] = " .:-=+*#%@";
+#include <stdlib.h>
+#include "mandelbrot.h"
 
 typedef struct point {
 	double x;
@@ -21,48 +15,41 @@ Point CAdd(Point a, Point b){
 }
 
 double CLength(Point p){
-	double n = p.x * p.x + p.y * p.y;
-	return sqrt(n);
+	return sqrt(p.x * p.x + p.y * p.y);
 }
 
 Point CSquare(Point p){
 	double newX = (p.x * p.x) - (p.y * p.y);
-	double newY = 2.0 * p.x *p.y;
-	Point result = {.x = newX, .y = newY};
-	return result;
+	double newY = 2.0 * p.x * p.y;
+	return (Point) {.x = newX, .y = newY};
 }
 
-Point mapSpace(int x, int y){
-	double newX = (xStep * x) - 2.0;
-	double newY = (yStep * y) - 1.0;
-	Point result = {.x = newX, .y = newY};
-	return result;
+Point mapSpace(int x, int y, int width, int height){
+	return (Point) {
+		.x = (3.0 / width  * x) - 2.0,
+		.y = (2.0 / height * y) - 1.0
+	};
 }
 
-double calculatePixel(Point p){
+double calculatePixel(Point p, int precision){
 	Point z = {.x = p.x, .y = p.y};
-	for(int i = 0; i < prescision; i++){
+	for(int i = 0; i < precision; i++){
 		z = CAdd(CSquare(z), p);
 		double length = CLength(z);
 		if(length >= 2.0)
-			return (double) i / prescision;
+			return (double) i / precision;
 	}
 	return 0.9;
 }
 
-void drawPixel(double c){
-	int index = c * 10;
-	printf("%c", color[index]);
-}
-
-int main(){
+double** calculateHues(int width, int height, int precision){
+	double** result = malloc(sizeof(double*) * height); 
 	for(int y = 0; y < height; y++){
-			for(int x = 0; x < width; x++){
-				Point p = mapSpace(x,y);
-				double color = calculatePixel(p);
-				drawPixel(color);	
-			}
-			printf("\n");
+		result[y] = malloc(sizeof(double) * width);
+		for(int x = 0; x < width; x++){
+			Point p = mapSpace(x, y, width, height);
+			result[y][x] = calculatePixel(p, precision);
 		}
-	return 0;
+	}
+	return result;
 }

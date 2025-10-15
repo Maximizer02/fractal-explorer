@@ -39,7 +39,7 @@ double calculatePixel(Point p, int precision){
 		if(length >= 2.0)
 			return (double) i / precision;
 	}
-	return 0.9;
+	return 1.0;
 }
 
 double** calculateHues(int width, int height, int precision){

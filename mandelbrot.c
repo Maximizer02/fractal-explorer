@@ -10,8 +10,7 @@ typedef struct point {
 Point CAdd(Point a, Point b){
 	double newX = a.x + b.x;
 	double newY = a.y + b.y;
-	Point result = {.x = newX, .y = newY};
-	return result;
+	return (Point){.x = newX, .y = newY};
 }
 
 double CLength(Point p){
@@ -21,14 +20,13 @@ double CLength(Point p){
 Point CSquare(Point p){
 	double newX = (p.x * p.x) - (p.y * p.y);
 	double newY = 2.0 * p.x * p.y;
-	return (Point) {.x = newX, .y = newY};
+	return (Point){.x = newX, .y = newY};
 }
 
 Point mapSpace(int x, int y, int width, int height){
-	return (Point) {
-		.x = (3.0 / width  * x) - 2.0, // change offset to "-1.5" for Julia set
-		.y = (2.0 / height * y) - 1.0
-	};
+	double newX = (3.0 / width  * x) - 2.0; // change offset to "-1.5" for Julia set 
+	double newY = (2.0 / height * y) - 1.0;
+	return (Point){.x = newX, .y = newY};
 }
 
 double calculatePixel(Point p, int precision){

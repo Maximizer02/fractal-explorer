@@ -26,7 +26,7 @@ Point CSquare(Point p){
 
 Point mapSpace(int x, int y, int width, int height){
 	return (Point) {
-		.x = (3.0 / width  * x) - 2.0,
+		.x = (3.0 / width  * x) - 2.0, // change offset to "-1.5" for Julia set
 		.y = (2.0 / height * y) - 1.0
 	};
 }

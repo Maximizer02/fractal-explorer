@@ -18,7 +18,7 @@ typedef struct RGB {
 RGB hueToRgb(double hue){
 	int H = hue * 360;
 	uint8_t X = (1 - abs(((H / 60) % 2) - 1)) * 255;
-	if(hue == 1.0) 			 return (RGB){.R =   0, .G =   0, .B =   0};
+	if(hue == 0.99)			 return (RGB){.R =   0, .G =   0, .B =   0};
 	if(   0 <= H && H <  60) return (RGB){.R = 255, .G =   X, .B =   0};
 	if(  60 <= H && H < 120) return (RGB){.R =   X, .G = 255, .B =   0};
 	if( 120 <= H && H < 180) return (RGB){.R =   0, .G = 255, .B =   X};

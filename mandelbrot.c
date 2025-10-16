@@ -33,13 +33,14 @@ Point mapSpace(int x, int y, int width, int height){
 
 double calculatePixel(Point p, int precision){
 	Point z = {.x = p.x, .y = p.y};
+	// p = (Point){.x = -0.5125, .y = 0.5213}; // uncomment line for Julia set
 	for(int i = 0; i < precision; i++){
 		z = CAdd(CSquare(z), p);
 		double length = CLength(z);
 		if(length >= 2.0)
 			return (double) i / precision;
 	}
-	return 1.0;
+	return 0.99;
 }
 
 double** calculateHues(int width, int height, int precision){

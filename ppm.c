@@ -25,6 +25,7 @@ RGB hueToRgb(double hue){
 	if( 180 <= H && H < 240) return (RGB){.R =   0, .G =   X, .B = 255};
 	if( 240 <= H && H < 300) return (RGB){.R =   X, .G =   0, .B = 255};
 	if( 300 <= H && H < 360) return (RGB){.R = 255, .G =   0, .B =   X};
+	return (RGB){.R = 0, .G = 0, .B = 0};
 }
 
 void writePixel(double hue, FILE* output){

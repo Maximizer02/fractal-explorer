@@ -1,2 +1,5 @@
 #!/bin/bash
-gcc mandelbrot.c mandelbrot.h ascii.c -o out/ascii -lm -O3 && out/./ascii;
+if [ ! -d out ] ; then
+	mkdir out;
+fi
+gcc mandelbrot.c mandelbrot.h ascii.c -o out/ascii -lm -O3 && out/ascii;

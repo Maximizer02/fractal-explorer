@@ -2,4 +2,4 @@
 if [ ! -d out ] ; then
 	mkdir out;
 fi
-gcc mandelbrot.c mandelbrot.h ascii.c -o out/ascii -lm -O3 && out/ascii;
+gcc mandelbrot.c mandelbrot.h ascii.c -o out/ascii -O3 && out/ascii;

@@ -4,7 +4,7 @@
 #include "mandelbrot.h"
 
 const int  precision = 32;
-const int  width =  900;
+const int  width =  800;
 const int  height = 600;
 const char filename[] = "mandelbrot.ppm";
 

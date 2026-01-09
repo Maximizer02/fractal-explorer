@@ -24,14 +24,20 @@ Point CSquare(Point p){
 }
 
 Point mapSpace(int x, int y, int width, int height){
-	double newX = (3.0 / width  * x) - 2.0; // change offset to "-1.5" for Julia set 
+	#ifdef julia 
+		double newX = (3.0 / width  * x) - 1.5;
+	#else
+		double newX = (3.0 / width  * x) - 2.0;
+	#endif /* julia */
 	double newY = (2.0 / height * y) - 1.0;
 	return (Point){.x = newX, .y = newY};
 }
 
 double calculatePixel(Point p, int precision){
 	Point z = {.x = p.x, .y = p.y};
-	// p = (Point){.x = -0.5125, .y = 0.5213}; // uncomment line for Julia set
+	#ifdef julia
+		p = (Point){.x = -0.5125, .y = 0.5213};
+	#endif  /* julia */
 	for(int i = 0; i < precision; i++){
 		z = CAdd(CSquare(z), p);
 		double length = CLength(z);

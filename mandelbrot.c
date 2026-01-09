@@ -48,6 +48,9 @@ double calculatePixel(Point p, int precision){
 }
 
 double** calculateHues(int width, int height, int precision){
+	#ifdef prec
+		precision = prec;
+	#endif
 	double** result = malloc(sizeof(double*) * height); 
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);

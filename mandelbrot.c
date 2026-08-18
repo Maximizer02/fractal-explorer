@@ -18,18 +18,32 @@ double CLength(Point p){
 }
 
 Point CSquare(Point p){
-	double newX = (p.x * p.x) - (p.y * p.y);
-	double newY = 2.0 * p.x * p.y;
+  #ifdef burningship
+    double x = fabs(p.x);
+    double y = fabs(p.y);
+  #else
+    double x = p.x;
+    double y = p.y;
+  #endif /* burningship */
+
+	double newX = (x * x) - (y * y);
+	double newY = 2.0 * x * y;
 	return (Point){.x = newX, .y = newY};
 }
 
 Point mapSpace(int x, int y, int width, int height){
-	#ifdef julia 
-		double newX = (3.0 / width  * x) - 1.5;
-	#else
-		double newX = (3.0 / width  * x) - 2.0;
-	#endif /* julia */
+	double newX = (3.0 / width  * x) - 2.0;
 	double newY = (2.0 / height * y) - 1.0;
+
+	#ifdef julia
+		newX = (3.0 / width  * x) - 1.5;
+	#endif /* julia */
+
+  #ifdef burningship
+	  newX = (4.0 / width  * x) - 2.5;
+	  newY = (3.0 / height * y) - 2.0;
+  #endif /* burningship */
+
 	return (Point){.x = newX, .y = newY};
 }
 
@@ -51,7 +65,7 @@ double** calculateHues(int width, int height, int precision){
 	#ifdef prec
 		precision = prec;
 	#endif
-	double** result = malloc(sizeof(double*) * height); 
+	double** result = malloc(sizeof(double*) * height);
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);
 		for(int x = 0; x < width; x++){

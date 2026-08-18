@@ -47,10 +47,21 @@ Point mapSpace(int x, int y, int width, int height){
 	return (Point){.x = newX, .y = newY};
 }
 
+Point mapAngle(double angle){
+  return (Point){
+    .x =  cos(angle),
+    .y = -sin(angle)
+  };
+}
+
 double calculatePixel(Point p, int precision){
 	Point z = {.x = p.x, .y = p.y};
 	#ifdef julia
-		p = (Point){.x = -0.5125, .y = 0.5213};
+    #ifdef juliaangle
+      p = mapAngle(juliaangle);
+    #else
+		  p = (Point){.x = -0.5125, .y = 0.5213};
+    #endif
 	#endif  /* julia */
 	for(int i = 0; i < precision; i++){
 		z = CAdd(CSquare(z), p);
@@ -64,7 +75,7 @@ double calculatePixel(Point p, int precision){
 double** calculateHues(int width, int height, int precision){
 	#ifdef prec
 		precision = prec;
-	#endif
+	#endif /* prec */
 	double** result = malloc(sizeof(double*) * height);
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);

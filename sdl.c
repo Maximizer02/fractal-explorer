@@ -6,9 +6,10 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <math.h>
 #include "mandelbrot.h"
 
-#define WIDTH 800 
+#define WIDTH 800
 #define HEIGHT 600
 
 SDL_Window *window;
@@ -27,8 +28,8 @@ typedef struct RGBA {
 } RGBA;
 
 RGBA hueToRgb(double hue){
-	int H = hue * 360;
-	uint8_t X = (1 - abs(((H / 60) % 2) - 1)) * 255;
+	double H = hue * 360;
+	uint8_t X = (1 - fabs( fmod((H / 60), 2) - 1)) * 255;
 	if(hue == 0.99)			 return (RGBA){.R =   0, .G =   0, .B =   0};
 	if(   0 <= H && H <  60) return (RGBA){.R = 255, .G =   X, .B =   0};
 	if(  60 <= H && H < 120) return (RGBA){.R =   X, .G = 255, .B =   0};
@@ -78,7 +79,7 @@ void Init() {
 
 void Update() {
     SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT) 
+    if (event.type == SDL_QUIT)
         running = false;
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);

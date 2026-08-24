@@ -5,15 +5,10 @@
 #include <unistd.h>
 
 #include "frontends.h"
-#include "mandelbrot.h"
+#include "fractal.h"
 
-#define optstring "w:h:x:y:z:p:ait:"
+#define optstring "w:h:x:y:z:p:ait:r:"
 
-typedef enum {
-  MANDELBROT,
-  JULIA,
-  BURNING_SHIP
-} Fractal;
 
 Fractal getFractalType(char* str){
   if (strcmp(optarg, "mandelbrot") == 0) return MANDELBROT;
@@ -31,11 +26,14 @@ int main(int argc, char** argv){
   int yOffset = 0;
   double zoom = 1.0;
   int precision = 32;
+  double radians = 3.14;
 
   bool ascii = false;
   bool image = false;
 
   Fractal fractal = MANDELBROT;
+
+  char* eptr;
 
   while((opt = getopt(argc, argv, optstring)) != -1){
     switch(opt){
@@ -68,20 +66,15 @@ int main(int argc, char** argv){
       case 't':
         fractal = getFractalType(optarg);
         break;
+      case 'r':
+        radians = strtod(optarg, &eptr);
+        break;
       default:
         return 1;
     }
   }
 
-  double** hues;
-  switch(fractal){
-    case MANDELBROT:
-      hues = calculateHues(width, height, precision);
-      break;
-    case JULIA:
-    case BURNING_SHIP:
-      return 1;
-  }
+  double** hues = calculateHues(width, height, precision, fractal, radians);
 
   if(ascii)
     ascii_main(hues, width, height);

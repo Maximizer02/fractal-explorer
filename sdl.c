@@ -6,7 +6,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "color.h"
-#include "mandelbrot.h"
 
 SDL_Window *window;
 SDL_Renderer *renderer;

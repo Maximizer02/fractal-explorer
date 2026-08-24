@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
-#include "mandelbrot.h"
+#include "fractal.h"
 
 typedef struct point {
 	double x;
@@ -18,31 +18,26 @@ double CLength(Point p){
 }
 
 Point CSquare(Point p){
-  #ifdef burningship
-    double x = fabs(p.x);
-    double y = fabs(p.y);
-  #else
-    double x = p.x;
-    double y = p.y;
-  #endif /* burningship */
+  double x = p.x;
+  double y = p.y;
 
 	double newX = (x * x) - (y * y);
 	double newY = 2.0 * x * y;
 	return (Point){.x = newX, .y = newY};
 }
 
-Point mapSpace(int x, int y, int width, int height){
+Point mapSpace(int x, int y, int width, int height, Fractal type){
 	double newX = (3.0 / width  * x) - 2.0;
 	double newY = (2.0 / height * y) - 1.0;
 
-	#ifdef julia
+	if(type == JULIA){
 		newX = (3.0 / width  * x) - 1.5;
-	#endif /* julia */
+  }
 
-  #ifdef burningship
+  if(type == BURNING_SHIP){
 	  newX = (4.0 / width  * x) - 2.5;
 	  newY = (3.0 / height * y) - 2.0;
-  #endif /* burningship */
+  }
 
 	return (Point){.x = newX, .y = newY};
 }
@@ -54,17 +49,18 @@ Point mapAngle(double angle){
   };
 }
 
-double calculatePixel(Point p, int precision){
-	Point z = {.x = p.x, .y = p.y};
-	#ifdef julia
-    #ifdef juliaangle
-      p = mapAngle(juliaangle);
-    #else
-		  p = (Point){.x = -0.5125, .y = 0.5213};
-    #endif
-	#endif  /* julia */
+double calculatePixel(Point c, int precision, Fractal type, double angle){
+	Point z = {.x = c.x, .y = c.y};
+	if(type == JULIA){
+      c = mapAngle(angle);
+  }
 	for(int i = 0; i < precision; i++){
-		z = CAdd(CSquare(z), p);
+    if(type == BURNING_SHIP){
+      z.x = fabs(z.x);
+      z.y = fabs(z.y);
+    }
+    z = CSquare(z);
+		z = CAdd(z, c);
 		double length = CLength(z);
 		if(length >= 2.0)
 			return (double) i / precision;
@@ -72,16 +68,13 @@ double calculatePixel(Point p, int precision){
 	return 0.99;
 }
 
-double** calculateHues(int width, int height, int precision){
-	#ifdef prec
-		precision = prec;
-	#endif /* prec */
+double** calculateHues(int width, int height, int precision, Fractal type, double angle){
 	double** result = malloc(sizeof(double*) * height);
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);
 		for(int x = 0; x < width; x++){
-			Point p = mapSpace(x, y, width, height);
-			result[y][x] = calculatePixel(p, precision);
+			Point p = mapSpace(x, y, width, height, type);
+			result[y][x] = calculatePixel(p, precision, type, angle);
 		}
 	}
 	return result;

@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "color.h"
-#include "mandelbrot.h"
 
-const int precision = 32;
-const int width =  120;
-const int height = 30;
 const char symbols[] = " .:-=+*#%@";
 
 void drawPixel(double hue){
@@ -26,14 +22,10 @@ void drawPixel(double hue){
   #endif /* color */
 }
 
-int main(){
-	double** hues = calculateHues(width, height, precision);
+void ascii_main(double** hues, int width, int height){
 	for(int y = 0; y < height; y++){
 		for(int x = 0; x < width; x++)
 				drawPixel(hues[y][x]);
-		free(hues[y]);
 		printf("\n");
 	}
-	free(hues);
-	return 0;
 }

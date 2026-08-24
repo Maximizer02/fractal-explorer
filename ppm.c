@@ -2,11 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include "color.h"
-#include "mandelbrot.h"
 
-const int  precision = 32;
-const int  width =  800;
-const int  height = 600;
 const char filename[] = "mandelbrot.ppm";
 
 void writePixel(double hue, FILE* output){
@@ -14,8 +10,7 @@ void writePixel(double hue, FILE* output){
 	fwrite(&rgb, sizeof(uint8_t), 3, output);
 }
 
-int main(){
-	double** hues = calculateHues(width, height, precision);
+void ppm_main(double** hues, int width, int height){
 	FILE* output = fopen(filename, "w");
 	fprintf(output, "P6\n%d %d\n255\n", width, height);
 	fclose(output);
@@ -23,9 +18,6 @@ int main(){
 	for(int y = 0; y < height; y++){
 		for(int x = 0; x < width; x++)
 				writePixel(hues[y][x], output);
-		free(hues[y]);
 	}
 	fclose(output);
-	free(hues);
-	return 0;
 }

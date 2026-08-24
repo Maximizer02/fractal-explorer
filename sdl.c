@@ -8,18 +8,16 @@
 #include "color.h"
 #include "mandelbrot.h"
 
-#define WIDTH 800
-#define HEIGHT 600
-
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
 SDL_Event event;
 
-int buffer[WIDTH * HEIGHT] = {0};
+int* buffer;
 bool running = true;
 
-void Init() {
+void Init(double** hues, int width, int height) {
+    buffer = malloc(width*height*sizeof(int));
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("sdl init failed");
         exit(1);
@@ -27,32 +25,31 @@ void Init() {
 
     window = SDL_CreateWindow("mandelbrot",
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                              WIDTH, HEIGHT,
+                              width, height,
                               SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, 0);
 
-    SDL_RenderSetLogicalSize(renderer, WIDTH, HEIGHT);
+    SDL_RenderSetLogicalSize(renderer, width, height);
 
     texture = SDL_CreateTexture(renderer,
                                 SDL_PIXELFORMAT_RGBA32,
                                 SDL_TEXTUREACCESS_STREAMING,
-                                WIDTH, HEIGHT);
+                                width, height);
 
-	double** hues = calculateHues(WIDTH, HEIGHT, 32);
-	for(int h = 0 ; h< HEIGHT;h++)
-		for(int w = 0 ; w< WIDTH;w++)
+	for(int h = 0 ; h < height; h++)
+		for(int w = 0 ; w < width; w++)
 		{
 			double hue = hues[h][w];
 			RGB color = hueToRgb(hue);
 			int colorValue;
 			memcpy(&colorValue,&color,sizeof(RGB));
-			buffer[(WIDTH*h) + w] = colorValue;
+			buffer[(width*h) + w] = colorValue;
 		}
     int texturePitch = 0;
     void *texturePixels = NULL;
 
     SDL_LockTexture(texture, NULL, &texturePixels, &texturePitch);
-    memcpy(texturePixels, buffer, texturePitch * HEIGHT);
+    memcpy(texturePixels, buffer, texturePitch * height);
     SDL_UnlockTexture(texture);
 }
 
@@ -69,11 +66,12 @@ void Destroy() {
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    free(buffer);
     SDL_Quit();
 }
 
-int main() {
-    Init();
+int sdl_main(double** hues, int width, int height) {
+    Init(hues, width, height);
     while (running)
         Update();
     Destroy();

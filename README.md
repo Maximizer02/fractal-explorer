@@ -19,6 +19,7 @@ Currently its non-interactive, but this may change in the future.
 - `-a` Set visualization to ASCII.
 - `-b` Use block characters for output. Only used with ASCII frontend.
 - `-c` Colorize output. Only used with ASCII frontend.
+- `-g` Make output Grayscale.
 - `-h <int>` Height of the displayed output.
 - `-i` Set visualization to image.
 - `-o <string>` Output filename. Only used with PPM frontend.
@@ -28,7 +29,6 @@ Currently its non-interactive, but this may change in the future.
 - `-w <int>` Width of the displayed output.
 
 ## Planned CLI options
-- `-g` Make output Grayscale.
 - `-x <double>` X offset.
 - `-y <double>` Y offset.
 - `-z <double>` Zoom.

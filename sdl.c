@@ -16,7 +16,7 @@ SDL_Event event;
 int* buffer;
 bool running = true;
 
-void Init(double** hues, int width, int height) {
+void Init(double** hues, int width, int height, bool color) {
     buffer = malloc(width*height*sizeof(int));
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         printf("sdl init failed");
@@ -40,9 +40,13 @@ void Init(double** hues, int width, int height) {
 		for(int w = 0 ; w < width; w++)
 		{
 			double hue = hues[h][w];
-			RGB color = hueToRgb(hue);
+			RGB rgb;
+      if(color)
+        rgb = hueToRgb(hue);
+      else
+        rgb = (RGB){.R = 255*hue, .G = 255*hue, .B = 255*hue};
 			int colorValue;
-			memcpy(&colorValue,&color,sizeof(RGB));
+			memcpy(&colorValue,&rgb,sizeof(RGB));
 			buffer[(width*h) + w] = colorValue;
 		}
     int texturePitch = 0;
@@ -70,8 +74,8 @@ void Destroy() {
     SDL_Quit();
 }
 
-void sdl_main(double** hues, int width, int height) {
-    Init(hues, width, height);
+void sdl_main(double** hues, int width, int height, bool color) {
+    Init(hues, width, height, color);
     while (running)
         Update();
     Destroy();
@@ -79,7 +83,7 @@ void sdl_main(double** hues, int width, int height) {
 #else
 #include <stdlib.h>
 #include <stdio.h>
-void sdl_main(double** hues, int width, int height){
+void sdl_main(double** hues, int width, int height, bool color){
   printf("This binary was compiled without SDL2 support. Use another frontend.\n");
   exit(1);
 }

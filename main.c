@@ -99,10 +99,10 @@ int main(int argc, char** argv){
       ascii_main(hues, width, height, color, block);
       break;
     case PPM:
-      ppm_main(hues, width, height, filename);
+      ppm_main(hues, width, height, color, filename);
       break;
     case SDL:
-      sdl_main(hues, width, height);
+      sdl_main(hues, width, height, color);
       break;
   }
 

@@ -54,7 +54,7 @@ void Init(double** hues, int width, int height) {
 
 void Update() {
     SDL_PollEvent(&event);
-    if (event.type == SDL_QUIT)
+    if (event.type == SDL_QUIT || event.type == SDL_KEYDOWN)
         running = false;
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, texture, NULL, NULL);

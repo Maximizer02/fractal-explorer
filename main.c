@@ -7,8 +7,7 @@
 #include "frontends.h"
 #include "fractal.h"
 
-#define optstring "w:h:x:y:z:p:ait:r:"
-
+#define optstring "w:h:x:y:z:p:ait:r:bcgo:"
 
 Fractal getFractalType(char* str){
   if (strcmp(optarg, "mandelbrot") == 0) return MANDELBROT;
@@ -30,8 +29,12 @@ int main(int argc, char** argv){
 
   bool ascii = false;
   bool image = false;
+  bool block = false;
+  bool color = true;
 
   Fractal fractal = MANDELBROT;
+
+  char filename[32] = {0};
 
   char* eptr;
 
@@ -50,7 +53,7 @@ int main(int argc, char** argv){
         yOffset = atoi(optarg);
         break;
       case 'z':
-        zoom = 1.0 / (double) atoi(optarg);
+        zoom = strtod(optarg, &eptr);
         break;
       case 'p':
         precision = atoi(optarg);
@@ -58,6 +61,7 @@ int main(int argc, char** argv){
       case 'a':
         width = 120;
         height = 30;
+        color = false;
         ascii = true;
         break;
       case 'i':
@@ -68,6 +72,19 @@ int main(int argc, char** argv){
         break;
       case 'r':
         radians = strtod(optarg, &eptr);
+        break;
+      case 'b':
+        block = true;
+        break;
+      case 'c':
+        color = true;
+        break;
+      case 'g':
+        color = false;
+        break;
+      case 'o':
+        strncpy(filename, optarg, 32);
+        filename[31] = '\0';
         break;
       default:
         return 1;

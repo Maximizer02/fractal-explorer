@@ -96,7 +96,7 @@ int main(int argc, char** argv){
 
   switch(frontend){
     case ASCII:
-      ascii_main(hues, width, height);
+      ascii_main(hues, width, height, color, block);
       break;
     case PPM:
       ppm_main(hues, width, height, filename);

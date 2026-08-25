@@ -92,7 +92,9 @@ int main(int argc, char** argv){
     }
   }
 
-  double** hues = calculateHues(width, height, xOffset, yOffset, precision, type, radians);
+  double** hues = calculateHues(width, height,
+      xOffset, yOffset, zoom,
+      precision, type, radians);
 
   switch(frontend){
     case ASCII:

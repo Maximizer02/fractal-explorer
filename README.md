@@ -28,11 +28,9 @@ Currently its non-interactive, but this may change in the future.
 - `-r <double>` Radian offset. Only used with the Julia set.
 - `-t <type>` Choose what fractal you want to view. Allowed values are `mandelbrot`, `julia` and `burningship`. Defaults to `mandelbrot`.
 - `-w <int>` Width of the displayed output.
-- `-x <double>` X offset.
-- `-y <double>` Y offset.
-
-## Planned CLI options
-- `-z <double>` Zoom.
+- `-x <double>` X offset. pos=right, neg=left
+- `-y <double>` Y offset. pos=down, neg=up
+- `-z <double>` Zoom. Smaller number = more zoom
 
 ## Dependencies
 - gcc

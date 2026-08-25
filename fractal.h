@@ -5,5 +5,5 @@ typedef enum {
 } Fractal;
 
 double** calculateHues(int width, int height,
-    double xOffset, double yOffset,
+    double xOffset, double yOffset, double zoom,
     int precision, Fractal type, double angle);

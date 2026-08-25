@@ -26,17 +26,17 @@ Point CSquare(Point p){
 	return (Point){.x = newX, .y = newY};
 }
 
-Point mapSpace(int x, int y, int width, int height, Fractal type){
-	double newX = (3.0 / width  * x) - 2.0;
-	double newY = (2.0 / height * y) - 1.0;
+Point mapSpace(int x, int y, int width, int height, double zoom, Fractal type){
+	double newX = (3.0 / width  * x * zoom) - 2.0;
+	double newY = (2.0 / height * y * zoom) - 1.0;
 
 	if(type == JULIA){
-		newX = (3.0 / width  * x) - 1.5;
+		newX = (3.0 / width  * x * zoom) - 1.5;
   }
 
   if(type == BURNING_SHIP){
-	  newX = (4.0 / width  * x) - 2.5;
-	  newY = (3.0 / height * y) - 2.0;
+	  newX = (4.0 / width  * x * zoom) - 2.5;
+	  newY = (3.0 / height * y * zoom) - 2.0;
   }
 
 	return (Point){.x = newX, .y = newY};
@@ -70,13 +70,13 @@ double calculatePixel(Point c, int precision, Fractal type, double angle){
 
 double** calculateHues(
     int width, int height,
-    double xOffset, double yOffset,
+    double xOffset, double yOffset, double zoom,
     int precision, Fractal type, double angle){
 	double** result = malloc(sizeof(double*) * height);
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);
 		for(int x = 0; x < width; x++){
-			Point p = mapSpace(x, y, width, height, type);
+			Point p = mapSpace(x, y, width, height, zoom, type);
       p = CAdd(p, (Point){.x = xOffset, .y = yOffset});
 			result[y][x] = calculatePixel(p, precision, type, angle);
 		}

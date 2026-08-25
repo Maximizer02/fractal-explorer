@@ -19,6 +19,7 @@ Currently its non-interactive, but this may change in the future.
 - `-a` Set visualization to ASCII.
 - `-h <int>` Height of the displayed output.
 - `-i` Set visualization to image.
+- `-o <string>` Output filename. Only used with PPM frontend.
 - `-p <int>` Precision or max. number of iterations. Higher values are slower.
 - `-r <double>` Radian offset. Only used with the Julia set.
 - `-t <type>` Choose what fractal you want to view. Allowed values are `mandelbrot`, `julia` and `burningship`. Defaults to `mandelbrot`.
@@ -28,7 +29,6 @@ Currently its non-interactive, but this may change in the future.
 - `-b` Use block characters for output. Only used with ASCII frontend.
 - `-c` Colorize output. Only used with ASCII frontend.
 - `-g` Make output Grayscale.
-- `-o <string>` Output filename. Only used with PPM frontend.
 - `-x <double>` X offset.
 - `-y <double>` Y offset.
 - `-z <double>` Zoom.

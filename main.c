@@ -33,7 +33,7 @@ int main(int argc, char** argv){
   Fractal type = MANDELBROT;
   Frontend frontend = SDL;
 
-  char filename[32] = {0};
+  char* filename = NULL;
 
   char* eptr;
 
@@ -82,8 +82,10 @@ int main(int argc, char** argv){
         color = false;
         break;
       case 'o':
-        strncpy(filename, optarg, 32);
-        filename[31] = '\0';
+        int length = strlen(optarg)+1;
+        filename = malloc(length);
+        strncpy(filename, optarg, length-1);
+        filename[length] = '\0';
         break;
       default:
         return 1;
@@ -97,7 +99,7 @@ int main(int argc, char** argv){
       ascii_main(hues, width, height);
       break;
     case PPM:
-      ppm_main(hues, width, height);
+      ppm_main(hues, width, height, filename);
       break;
     case SDL:
       sdl_main(hues, width, height);
@@ -107,5 +109,7 @@ int main(int argc, char** argv){
   for(int i = 0; i < height; i++)
     free(hues[i]);
   free(hues);
+  if(filename != NULL)
+    free(filename);
   return 0;
 }

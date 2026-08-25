@@ -12,6 +12,7 @@ The application has 3 ways to visualize the fractals:
 - In a Window using SDL2
 - As an image in the PPM format
 - As ASCII Art
+
 The default is the SDL2 frontend, the other visualizations can be activated via CLI options.
 Currently its non-interactive, but this may change in the future.
 

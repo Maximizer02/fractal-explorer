@@ -1,3 +1,4 @@
+#ifndef no_sdl
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_pixels.h>
@@ -22,7 +23,7 @@ void Init(double** hues, int width, int height) {
         exit(1);
     };
 
-    window = SDL_CreateWindow("mandelbrot",
+    window = SDL_CreateWindow("Fractal Explorer",
                               SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
                               width, height,
                               SDL_WINDOW_SHOWN);
@@ -69,10 +70,18 @@ void Destroy() {
     SDL_Quit();
 }
 
-int sdl_main(double** hues, int width, int height) {
+void sdl_main(double** hues, int width, int height) {
     Init(hues, width, height);
     while (running)
         Update();
     Destroy();
-    return 0;
 }
+#else
+#include <stdlib.h>
+#include <stdio.h>
+void sdl_main(double** hues, int width, int height){
+  printf("This binary was compiled without SDL2 support. Use another frontend.\n");
+  exit(1);
+}
+#endif
+

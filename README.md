@@ -36,7 +36,8 @@ Currently its non-interactive, but this may change in the future.
 ## Dependencies
 - gcc
 - Bash or any other POSIX compliant shell
-- SDL2
+- libm
+- SDL2 (optional but recomended)
 
 ## References
 - [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set)
@@ -44,3 +45,4 @@ Currently its non-interactive, but this may change in the future.
 - [Burning Ship fractal](https://en.wikipedia.org/wiki/Burning_Ship_fractal)
 - [PPM image format](https://en.wikipedia.org/wiki/Netpbm)
 - [HSV to RGB conversion](https://www.rapidtables.com/convert/color/hsv-to-rgb.html)
+- [SDL](https://www.libsdl.org/)

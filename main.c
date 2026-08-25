@@ -21,8 +21,8 @@ int main(int argc, char** argv){
 
   int width  = 800;
   int height = 600;
-  int xOffset = 0;
-  int yOffset = 0;
+  double xOffset = 0;
+  double yOffset = 0;
   double zoom = 1.0;
   int precision = 32;
   double radians = 3.14;
@@ -46,10 +46,10 @@ int main(int argc, char** argv){
         height = atoi(optarg);
         break;
       case 'x':
-        xOffset = atoi(optarg);
+        xOffset = strtod(optarg, &eptr);
         break;
       case 'y':
-        yOffset = atoi(optarg);
+        yOffset = strtod(optarg, &eptr);
         break;
       case 'z':
         zoom = strtod(optarg, &eptr);
@@ -92,7 +92,7 @@ int main(int argc, char** argv){
     }
   }
 
-  double** hues = calculateHues(width, height, precision, type, radians);
+  double** hues = calculateHues(width, height, xOffset, yOffset, precision, type, radians);
 
   switch(frontend){
     case ASCII:

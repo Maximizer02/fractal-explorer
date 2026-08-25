@@ -68,12 +68,16 @@ double calculatePixel(Point c, int precision, Fractal type, double angle){
 	return 0.99;
 }
 
-double** calculateHues(int width, int height, int precision, Fractal type, double angle){
+double** calculateHues(
+    int width, int height,
+    double xOffset, double yOffset,
+    int precision, Fractal type, double angle){
 	double** result = malloc(sizeof(double*) * height);
 	for(int y = 0; y < height; y++){
 		result[y] = malloc(sizeof(double) * width);
 		for(int x = 0; x < width; x++){
 			Point p = mapSpace(x, y, width, height, type);
+      p = CAdd(p, (Point){.x = xOffset, .y = yOffset});
 			result[y][x] = calculatePixel(p, precision, type, angle);
 		}
 	}

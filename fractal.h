@@ -4,4 +4,6 @@ typedef enum {
   BURNING_SHIP
 } Fractal;
 
-double** calculateHues(int width, int height, int precision, Fractal type, double angle);
+double** calculateHues(int width, int height,
+    double xOffset, double yOffset,
+    int precision, Fractal type, double angle);

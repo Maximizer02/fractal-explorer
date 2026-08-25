@@ -27,12 +27,11 @@ int main(int argc, char** argv){
   int precision = 32;
   double radians = 3.14;
 
-  bool ascii = false;
-  bool image = false;
   bool block = false;
   bool color = true;
 
-  Fractal fractal = MANDELBROT;
+  Fractal type = MANDELBROT;
+  Frontend frontend = SDL;
 
   char filename[32] = {0};
 
@@ -62,13 +61,13 @@ int main(int argc, char** argv){
         width = 120;
         height = 30;
         color = false;
-        ascii = true;
+        frontend = ASCII;
         break;
       case 'i':
-        image = true;
+        frontend = PPM;
         break;
       case 't':
-        fractal = getFractalType(optarg);
+        type = getFractalType(optarg);
         break;
       case 'r':
         radians = strtod(optarg, &eptr);
@@ -91,16 +90,19 @@ int main(int argc, char** argv){
     }
   }
 
-  double** hues = calculateHues(width, height, precision, fractal, radians);
+  double** hues = calculateHues(width, height, precision, type, radians);
 
-  if(ascii)
-    ascii_main(hues, width, height);
-
-  if(image)
-    ppm_main(hues, width, height);
-
-  if(!ascii && !image)
-    sdl_main(hues, width, height);
+  switch(frontend){
+    case ASCII:
+      ascii_main(hues, width, height);
+      break;
+    case PPM:
+      ppm_main(hues, width, height);
+      break;
+    case SDL:
+      sdl_main(hues, width, height);
+      break;
+  }
 
   for(int i = 0; i < height; i++)
     free(hues[i]);

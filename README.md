@@ -32,6 +32,31 @@ Currently its non-interactive, but this may change in the future.
 - `-y <double>` Y offset. pos=down, neg=up
 - `-z <double>` Zoom. Smaller number = more zoom
 
+## Examples
+`./run.sh -x 2.374 -y 0.807 -z 0.003 -p 300`
+
+<img src="./assets/mandelbrot1.png" width="400" height="300"/>
+
+`./run.sh -x 2.3544 -y 0.9055 -z 0.001 -p 250`
+
+<img src="./assets/mandelbrot2.png" width="400" height="300"/>
+
+`./run.sh -x 1.249 -y 1.05 -z 0.001 -p 300`
+
+<img src="./assets/mandelbrot3.png" width="400" height="300"/>
+
+`./run.sh -x 1.25061 -y 1.0462 -z 0.00012 -p 300`
+
+<img src="./assets/mandelbrot4.png" width="400" height="300"/>
+
+`./run.sh -t julia -r3.4 -p 64`
+
+<img src="./assets/julia.png" width="400" height="300"/>
+
+`./run.sh -t burningship -x 0.68 -y 1.9153 -z 0.03`
+
+<img src="./assets/burning_ship.png" width="400" height="300"/>
+
 ## Dependencies
 - gcc
 - Bash or any other POSIX compliant shell
